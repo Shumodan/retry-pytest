@@ -1,0 +1,16 @@
+.*
+*.local.*
+*.local*
+*_ignore_*
+!.gitignore
+!.flake8
+*~
+*.pyc
+_out
+*_manual_*
+workspace
+/build/
+/dist/
+/*.egg-info/
+/*/docs/build/doctrees/
+/*/docs/build/html/
