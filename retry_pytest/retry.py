@@ -23,8 +23,8 @@ import allure
 from allure_commons import plugin_manager
 from allure_commons.utils import uuid4
 
-from command import Command
-from custom_errors import NegativeAction
+from retry_pytest.command import Command
+from retry_pytest.custom_errors import NegativeAction
 
 
 class Retry:
