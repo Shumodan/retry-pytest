@@ -17,7 +17,7 @@
 
 from math import ceil
 from time import sleep
-from typing import Callable
+from typing import Callable, List
 
 import allure
 from allure_commons import plugin_manager
@@ -43,8 +43,12 @@ class Retry:
         self._show_expected = show_expected
 
     @property
-    def commands(self):
+    def commands(self) -> List[Command]:
         return self._command_queue
+
+    @property
+    def last_command(self) -> Command:
+        return self._command_queue[-1]
 
     def __enter__(self):
         self._current_step = uuid4()
