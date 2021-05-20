@@ -89,7 +89,7 @@ class Command:
             handler = handler.set_next(h)
 
     @property
-    def history(self):
+    def result_history(self):
         return self._result_history
 
     @property
