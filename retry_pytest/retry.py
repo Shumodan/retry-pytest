@@ -67,7 +67,9 @@ class Retry:
                         f'{e.__class__.__name__}: {str(e)}', 'Expected exception', allure.attachment_type.TEXT
                     )
         else:
-            assert False, self._timeout_msg
+            exc_type = AssertionError
+            exc_val = exc_type(self._timeout_msg)
+            exc_tb = None
         plugin_manager.hook.stop_step(
             uuid=self._current_step,
             title=self._title,
@@ -75,6 +77,8 @@ class Retry:
             exc_val=exc_val,
             exc_tb=exc_tb
         )
+        if exc_val:
+            raise exc_val
 
     def check(self, func: Callable, *args, **kwargs) -> Command:
         self._command_queue.append(Command(func, *args, **kwargs))
