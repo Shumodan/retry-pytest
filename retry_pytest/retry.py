@@ -56,19 +56,24 @@ class Retry:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        for _ in range(ceil(self._timeout / self._poll_frequency)):
-            try:
-                sleep(self._poll_frequency)
-                if all([f() for f in self._command_queue]):
-                    break
-            except self._exceptions as e:
-                if self._show_expected:
-                    allure.attach(
-                        f'{e.__class__.__name__}: {str(e)}', 'Expected exception', allure.attachment_type.TEXT
-                    )
-        else:
-            exc_type = AssertionError
-            exc_val = exc_type(self._timeout_msg)
+        try:
+            for _ in range(ceil(self._timeout / self._poll_frequency)):
+                try:
+                    sleep(self._poll_frequency)
+                    if all([f() for f in self._command_queue]):
+                        break
+                except self._exceptions as e:
+                    if self._show_expected:
+                        allure.attach(
+                            f'{e.__class__.__name__}: {str(e)}', 'Expected exception', allure.attachment_type.TEXT
+                        )
+            else:
+                exc_type = AssertionError
+                exc_val = exc_type(self._timeout_msg)
+                exc_tb = None
+        except Exception as e:
+            exc_type = e.__class__
+            exc_val = e
             exc_tb = None
         plugin_manager.hook.stop_step(
             uuid=self._current_step,
