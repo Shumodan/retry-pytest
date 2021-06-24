@@ -16,6 +16,6 @@
 
 
 __name__ = 'retry_pytest'
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 __author__ = 'Alexander Evdokimov'
 __author_email__ = '1812gg@bk.ru'

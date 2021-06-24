@@ -142,7 +142,10 @@ class Command:
         return self
 
     def contains(self, data):
-        self._condition = data in self.result
+        self._condition = lambda: data in self.result
+
+    def not_contains(self, data):
+        self._condition = lambda: data not in self.result
 
     def __call__(self, *args, **kwargs):
         self._result_value = self._command(*self._args, **self._kwargs)
