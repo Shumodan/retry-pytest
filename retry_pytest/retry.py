@@ -28,9 +28,16 @@ from retry_pytest.custom_errors import NegativeAction
 
 
 class Retry:
+
     def __init__(
-            self, *expected_exceptions, timeout=10, poll_frequency=1,
-            title='Retry', error_msg='', show_expected=False, **kwargs):
+        self, *expected_exceptions,
+        timeout=10,
+        poll_frequency=1,
+        title='Retry',
+        error_msg='',
+        show_expected=False,
+        **kwargs
+    ):
         self._exceptions = expected_exceptions if expected_exceptions else (NegativeAction,)
         self._timeout = timeout
         error_msg = error_msg if error_msg else f'timeout {timeout}s exceeded'
