@@ -16,6 +16,6 @@
 from retry_pytest.retry import Retry
 
 __name__ = 'retry_pytest'
-__version__ = '1.0.3'
+__version__ = '1.0.4'
 __author__ = 'Alexander Evdokimov'
 __author_email__ = '1812gg@bk.ru'
