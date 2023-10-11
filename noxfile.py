@@ -33,7 +33,7 @@ def test(session):
 @nox.session
 def build(session):
     session.install('wheel')
-    session.install('Sphinx')
+    session.install('sphinx==6.1.3')
     session.install('-r', 'install_requires.txt')
     session.run('python', 'setup.py', 'build_doc')
     session.run('python', 'setup.py', 'sdist', 'bdist_wheel')
