@@ -64,11 +64,12 @@ class Retry:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         try:
-            for _ in range(ceil(self._timeout / self._poll_frequency)):
+            for i in range(ceil(self._timeout / self._poll_frequency)):
                 try:
+                    if i > 0:
+                        sleep(self._poll_frequency)
                     if all([f() for f in self._command_queue]):
                         break
-                    sleep(self._poll_frequency)
                 except self._exceptions as e:
                     if self._show_expected:
                         allure.attach(
