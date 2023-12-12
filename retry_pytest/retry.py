@@ -48,6 +48,7 @@ class Retry:
         self._step_params = kwargs
         self._current_step = None
         self._show_expected = show_expected
+        self._timeout_command = None
 
     @property
     def commands(self) -> List[Command]:
@@ -79,6 +80,8 @@ class Retry:
                 exc_type = AssertionError
                 exc_val = exc_type(self._timeout_msg)
                 exc_tb = None
+                if callable(self._timeout_command):
+                    self._timeout_command()
         except Exception as e:
             exc_type = e.__class__
             exc_val = e
@@ -96,3 +99,6 @@ class Retry:
     def check(self, func: Callable, *args, **kwargs) -> Command:
         self._command_queue.append(Command(func, *args, **kwargs))
         return self._command_queue[-1]
+
+    def on_timeout(self, func: Callable, *args, **kwargs) -> None:
+        self._timeout_command = lambda: func(*args, **kwargs)

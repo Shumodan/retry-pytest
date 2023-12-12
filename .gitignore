@@ -9,6 +9,7 @@
 _out
 *_manual_*
 workspace
+*.lock
 /build/
 /dist/
 /*.egg-info/

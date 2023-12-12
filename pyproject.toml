@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "retry_pytest"
+version = "1.1.0"
+authors = [
+    {name = "Alexander Evdokimov", email = "1812gg@bk.ru"},
+]
+description = "retry_pytest"
+readme = "README.md"
+requires-python = ">=3.11"
+keywords = ["pytest", "allure", "retry"]
+license = {text = "GNU AGPL"}
+classifiers = [
+        'Development Status :: 4 - Beta',
+        'Programming Language :: Python :: 3',
+        'Topic :: Software Development :: Testing',
+        'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
+        'Operating System :: OS Independent',
+        'Framework :: Pytest',
+]
+dependencies = [
+    'pytest',
+    'allure-pytest',
+]
+
+[project.urls]
+Homepage = "https://github.com/Shumodan/retry-pytest"

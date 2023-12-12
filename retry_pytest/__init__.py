@@ -14,8 +14,3 @@
 #     You should have received a copy of the GNU Affero General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from retry_pytest.retry import Retry
-
-__name__ = 'retry_pytest'
-__version__ = '1.0.6'
-__author__ = 'Alexander Evdokimov'
-__author_email__ = '1812gg@bk.ru'
