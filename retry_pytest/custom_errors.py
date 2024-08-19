@@ -21,3 +21,7 @@ class NegativeAction(Exception):
 
 class RetryActionError(Exception):
     pass
+
+
+class RetryTimeout(Exception):
+    pass

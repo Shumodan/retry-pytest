@@ -24,7 +24,7 @@ from allure_commons import plugin_manager
 from allure_commons.utils import uuid4
 
 from retry_pytest.command import Command
-from retry_pytest.custom_errors import NegativeAction
+from retry_pytest.custom_errors import NegativeAction, RetryTimeout
 
 
 class Retry:
@@ -36,6 +36,7 @@ class Retry:
         title='Retry',
         error_msg='',
         show_expected=False,
+        assertion_error_on_timeout=True,
         **kwargs
     ):
         self._exceptions = expected_exceptions if expected_exceptions else (NegativeAction,)
@@ -49,6 +50,7 @@ class Retry:
         self._current_step = None
         self._show_expected = show_expected
         self._timeout_command = None
+        self._timeout_exception = AssertionError if assertion_error_on_timeout else RetryTimeout
 
     @property
     def commands(self) -> List[Command]:
@@ -77,7 +79,7 @@ class Retry:
                             f'{e.__class__.__name__}: {str(e)}', 'Expected exception', allure.attachment_type.TEXT
                         )
             else:
-                exc_type = AssertionError
+                exc_type = self._timeout_exception
                 exc_val = exc_type(self._timeout_msg)
                 exc_tb = None
                 if callable(self._timeout_command):
