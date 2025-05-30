@@ -51,6 +51,7 @@ class Retry:
         self._show_expected = show_expected
         self._timeout_command = None
         self._timeout_exception = AssertionError if assertion_error_on_timeout else RetryTimeout
+        self._above_exception = None
 
     @property
     def commands(self) -> List[Command]:
@@ -74,6 +75,7 @@ class Retry:
                     if all([f() for f in self._command_queue]):
                         break
                 except self._exceptions as e:
+                    self._above_exception = e
                     if self._show_expected:
                         allure.attach(
                             f'{e.__class__.__name__}: {str(e)}', 'Expected exception', allure.attachment_type.TEXT
@@ -96,7 +98,10 @@ class Retry:
             exc_tb=exc_tb
         )
         if exc_val:
-            raise exc_val
+            try:
+                raise self._above_exception
+            except Exception as e:
+                raise exc_val from e
 
     def check(self, func: Callable, *args, **kwargs) -> Command:
         self._command_queue.append(Command(func, *args, **kwargs))
