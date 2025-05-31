@@ -98,6 +98,8 @@ class Retry:
             exc_tb=exc_tb
         )
         if exc_val:
+            if not self._above_exception:
+                raise exc_val
             try:
                 raise self._above_exception
             except Exception as e:
